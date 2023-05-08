@@ -14,16 +14,14 @@ app.use(cors());
 // require("./connection");
 
 const server = require("http").createServer(app);
-const PORT = 5001;
-const io = require("socket.io")(server, {
-  cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
-  },
-});
+const PORT = 3001;
 
 // socket connection
 
 server.listen(PORT, () => {
   console.log("listening to port", PORT);
 });
+
+app.get('/', (req, res) => { 
+  res.send('Hello!')
+})
