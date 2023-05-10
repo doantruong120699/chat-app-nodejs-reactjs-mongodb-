@@ -1,27 +1,24 @@
 const express = require("express");
 const app = express();
-// const userRoutes = require("./routes/userRoutes");
-// const User = require("./models/User");
-// const Message = require("./models/Message");
-// const rooms = ["general", "tech", "finance", "crypto"];
 const cors = require("cors");
+require('dotenv').config();
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger");
+const authRouter = require('./routers/auth.routers');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
-// app.use("/users", userRoutes);
-// require("./connection");
+app.use(
+  '/api-docs',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocument)
+);
 
-const server = require("http").createServer(app);
+app.use('/api/auth', authRouter);
 const PORT = 3001;
 
-// socket connection
-
-server.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log("listening to port", PORT);
 });
-
-app.get('/', (req, res) => { 
-  res.send('Hello!')
-})

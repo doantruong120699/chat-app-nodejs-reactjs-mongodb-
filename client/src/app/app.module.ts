@@ -1,31 +1,38 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './auth/login/login.component';
-import { ProfileComponent } from './auth/profile/profile.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
-import {StoreModule} from "@ngrx/store";
-import { reducers } from './reducers';
+import { LoginComponent } from './pages/auth/login/login.component';
+import { RegisterComponent } from './pages/auth/register/register.component';
+import { ProfileComponent } from './pages/auth/profile/profile.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthGuardService, ErrorInterceptor } from '@app/_helper';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    ProfileComponent
+    RegisterComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule,
     ReactiveFormsModule,
     // StoreModule.forRoot(reducers),
     AppRoutingModule,
+    HttpClientModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    AuthGuardService,
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    ErrorInterceptor,
+    JwtHelperService,
+  ],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
