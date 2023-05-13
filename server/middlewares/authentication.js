@@ -15,8 +15,6 @@ module.exports = (request, response, next)  => {
                 const userID = decoded.id;
                 userService.getUserbyId(userID)
                     .then((user) => {
-                        let plainUser = user.get({plain: true})
-                        delete plainUser['password']
                         request.user = user;
                         request.isLoggedIn = true;
                         next();

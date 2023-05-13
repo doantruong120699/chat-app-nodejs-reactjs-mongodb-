@@ -1,0 +1,44 @@
+.card-title{
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 25px;
+}
+.card-body .user-info{
+  gap: 10px;
+}
+.privacy{
+  margin-top: 5px;
+}
+.privacy button{
+  padding: 0.5rem 1.5rem;
+}
+.user-info{
+  /* display: flex; */
+  flex-flow: row;
+  /* justify-content: center; */
+}
+.user-info img{
+  width: 50px;
+  height: 50px;
+}
+.form-group.caption textarea{
+  border: unset;
+  padding: 0;
+  color: #000;
+}
+.upload-photo:hover{
+  background-color: #e5e8eb;
+}
+.upload-photo{
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  height: 300px;
+  padding: 10px;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  cursor: pointer;
+}
+.action{
+  display: flex;
+  gap: 10px;
+}

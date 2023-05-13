@@ -1,0 +1,29 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes, CanActivate } from '@angular/router';
+
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { ProfileComponent } from './profile/profile.component';
+import { AuthGuardService, NavigateLoggedIn } from '@app/_helper';
+import { UnauthorizedLayoutComponent } from '../layouts/unauthorized-layout/unauthorized-layout.component';
+import { MainLayoutComponent } from '../layouts/main-layout/main-layout.component';
+
+const authRoutes: Routes = [
+  {
+    path: '',
+    component: UnauthorizedLayoutComponent,
+    children: [
+      { path: 'login', canActivate: [NavigateLoggedIn], component: LoginComponent },
+    ],
+  },
+  {
+    path: '',
+    component: MainLayoutComponent,
+    children: [
+      { path: 'register', canActivate: [AuthGuardService], component: RegisterComponent },
+      { path: 'profile', canActivate: [AuthGuardService], component: ProfileComponent },
+    ],
+  },
+];
+
+export default authRoutes;

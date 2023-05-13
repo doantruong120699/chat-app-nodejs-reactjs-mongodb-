@@ -1,0 +1,47 @@
+<div class="row justify-content-center">
+  <div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title text-center">Create your post</h4>
+        <div class="d-flex user-info pb-4">
+          <div>
+            <img class="img-ls rounded-circle" src="assets/images/faces/face8.jpg" alt="Profile image">
+          </div>
+          <div>
+            <span class="fw-bold">{{user?.first_name}} {{user?.last_name}}</span>
+            <div class="dropdown privacy">
+              <button class="btn btn-secondary dropdown-toggle toggle-dark" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Public </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+                <h6 class="dropdown-header">Public</h6>
+                <h6 class="dropdown-header">Only me</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <form class="forms-sample">
+          <div class="form-group caption">
+            <textarea rows="4" class="form-control" id="caption" placeholder="Hello!"></textarea>
+          </div>
+
+          <img
+            *ngFor="let img of imageSrc"
+            [src]="img"
+            alt="Img" style="width:100%"
+          >
+
+          <input class="d-none" type="file" accept="image/*" #inputFile (change)="onSelectPhoto($event)">
+          <div *ngIf="imageSrc.length === 0" class="upload-photo" (click)="inputFile.click()">
+            <div class="text-center">
+              <i class="icon-upload icon-lg"></i>
+              <p>Upload your photo</p>
+            </div>
+          </div>
+          <div class="form-group action mt-4">
+            <button type="button" class="btn btn-primary">Post now</button>
+            <button type="button" class="btn btn-secondary">Save Draft</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
