@@ -10,36 +10,67 @@ networks:
     driver: bridge
 
 services:
-  db:
-    container_name: db
+  # db:
+  #   container_name: db
+  #   image: mysql:8.0
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root
+  #     MYSQL_DATABASE: yw_dev
+  #     MYSQL_USER: admin
+  #     MYSQL_PASSWORD: Abcd12345
+  #   ports:
+  #     - "3307:3306"
+  #   command: --default-authentication-plugin=mysql_native_password --explicit-defaults-for-timestamp=ON
+  #   volumes:
+  #     - mysql-data:/var/lib/mysql
+  #   networks:
+  #     - internal
+
+  # server:
+  #   volumes:
+  #     - ./:/app # mount từ môi trường gốc vào trong để nếu các bạn thay đổi code thì bên trong sẽ tự động cập nhật
+  #   build:
+  #     context: ./server
+  #     dockerfile: Dockerfile
+  #   restart: always
+  #   container_name: server
+  #   ports:
+  #     - 3001:3001
+  #   networks:
+  #     - internal
+  #   depends_on:
+  #     - db
+
+  db_nestjs:
+    container_name: db_nestjs
     image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: yw_dev
+      MYSQL_DATABASE: social_network
       MYSQL_USER: admin
       MYSQL_PASSWORD: Abcd12345
     ports:
       - "3307:3306"
     command: --default-authentication-plugin=mysql_native_password --explicit-defaults-for-timestamp=ON
     volumes:
-      - mysql-data:/var/lib/mysql
+      - ./data:/var/lib/mysql
     networks:
       - internal
 
-  server:
+  server_nestjs:
     volumes:
       - ./:/app # mount từ môi trường gốc vào trong để nếu các bạn thay đổi code thì bên trong sẽ tự động cập nhật
     build:
-      context: ./server
+      context: ./server_nestjs
       dockerfile: Dockerfile
     restart: always
-    container_name: server
+    container_name: server_nestjs
     ports:
-      - 3001:3001
+      - 3000:3000
     networks:
       - internal
     depends_on:
-      - db
+      - db_nestjs
 
   client:
     build:
@@ -56,4 +87,4 @@ services:
     networks:
       - internal
     depends_on:
-      - db
+      - db_nestjs

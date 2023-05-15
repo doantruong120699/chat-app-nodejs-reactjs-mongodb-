@@ -22,7 +22,7 @@
   border: 1px solid #dee2e6;
   border-radius: 10px;
 }
-.card-body{
+.post .card-body{
   padding: 0%;
 }
 .card-body .user-info{
