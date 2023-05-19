@@ -10,36 +10,6 @@ networks:
     driver: bridge
 
 services:
-  # db:
-  #   container_name: db
-  #   image: mysql:8.0
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: root
-  #     MYSQL_DATABASE: yw_dev
-  #     MYSQL_USER: admin
-  #     MYSQL_PASSWORD: Abcd12345
-  #   ports:
-  #     - "3307:3306"
-  #   command: --default-authentication-plugin=mysql_native_password --explicit-defaults-for-timestamp=ON
-  #   volumes:
-  #     - mysql-data:/var/lib/mysql
-  #   networks:
-  #     - internal
-
-  # server:
-  #   volumes:
-  #     - ./:/app # mount từ môi trường gốc vào trong để nếu các bạn thay đổi code thì bên trong sẽ tự động cập nhật
-  #   build:
-  #     context: ./server
-  #     dockerfile: Dockerfile
-  #   restart: always
-  #   container_name: server
-  #   ports:
-  #     - 3001:3001
-  #   networks:
-  #     - internal
-  #   depends_on:
-  #     - db
 
   db_nestjs:
     container_name: db_nestjs
@@ -53,20 +23,20 @@ services:
       - "3307:3306"
     command: --default-authentication-plugin=mysql_native_password --explicit-defaults-for-timestamp=ON
     volumes:
-      - ./data:/var/lib/mysql
+      - mysql-data:/var/lib/mysql
     networks:
       - internal
 
-  server_nestjs:
+  server:
     volumes:
-      - ./:/app # mount từ môi trường gốc vào trong để nếu các bạn thay đổi code thì bên trong sẽ tự động cập nhật
+      - ./server_nestjs/:/app/server_nestjs # mount từ môi trường gốc vào trong để nếu các bạn thay đổi code thì bên trong sẽ tự động cập nhật
     build:
       context: ./server_nestjs
       dockerfile: Dockerfile
     restart: always
-    container_name: server_nestjs
+    container_name: server
     ports:
-      - 3000:3000
+      - 4000:4000
     networks:
       - internal
     depends_on:
@@ -78,10 +48,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - "4200:4200"
-      - "49153:49153"
+      # - "49153:49153"
     volumes:
       - "/app/node_modules"
-      - ".:/app"
+      - "./client:/app/client"
     restart: always
     container_name: client
     networks:
