@@ -304,6 +304,7 @@ Tasks:
 1. Create the base application: create a dockerized basic django application with a functional swagger interface and DRF
 
 Registration
+
 This milestone is about anything related to the login, registration and password recovery process.
 Tasks:
 
@@ -317,6 +318,7 @@ recovery functional
 
 
 User model and permission
+
 This is about user access (groups and permission). We will use default Django views permission,
 define custom groups and also implement a few custom permissions.
 Tasks:
@@ -328,12 +330,14 @@ client-employee, vendor, customer, invited
 
 
 Social Login
+
 Adding social login to the application
 Tasks:
 1. Setup drf-social-oauth2 for Google
 2. Setup drf-social-oauth2 for LinkedIn
 
 Companion app
+
 This is an entire Django application that will serve as an authentication service SDK. It will be
 installed in any other service part of the backend. This will ensure that the authentication process
 and the user management is centralized and remains coherent.
