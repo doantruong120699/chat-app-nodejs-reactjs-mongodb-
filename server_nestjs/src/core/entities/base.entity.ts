@@ -5,24 +5,23 @@ import {
     UpdateDateColumn,
     BaseEntity as AbstractEntity
 } from 'typeorm';
-import { TimestampTransformer } from '../transformers/timestamp.transformer';
 
 export abstract class BaseEntity extends AbstractEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @CreateDateColumn({ type: 'timestamp', transformer: new TimestampTransformer() })
+    @CreateDateColumn({
+        type: 'timestamp'
+    })
     createdAt: number;
 
     @UpdateDateColumn({
-        type: 'timestamp',
-        transformer: new TimestampTransformer()
+        type: 'timestamp'
     })
     updatedAt: number;
 
     @DeleteDateColumn({
-        type: 'timestamp',
-        transformer: new TimestampTransformer()
+        type: 'timestamp'
     })
     deletedAt: number;
 }

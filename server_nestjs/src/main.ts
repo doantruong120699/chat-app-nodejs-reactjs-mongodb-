@@ -5,21 +5,13 @@ env.ROOT_PATH = __dirname; // Should be on top
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from '~app.module';
 import { BadRequestException } from '@nestjs/common';
-import { ValidateException } from '~core/exceptions/validate.exception';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import path from 'path';
-import { EnvironmentSwagger } from '~swaggers/environment-swagger';
-import { ValidationPipe } from '~core/http/pipes/validation.pipe';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
-    app.useGlobalPipes(
-        new ValidationPipe({
-            whitelist: true,
-            stopAtFirstError: true,
-            exceptionFactory: (errors) => new ValidateException(errors)
-        })
-    );
+
     app.enableCors({
         origin: function (requestOrigin, callback) {
             if (!requestOrigin) {
@@ -34,7 +26,10 @@ async function bootstrap() {
         }
     });
     app.useStaticAssets(path.join(env.ROOT_PATH, 'static'));
-    new EnvironmentSwagger(app).buildDocuments();
+
+    const config = new DocumentBuilder().setTitle('API docs').setVersion('1.0').build();
+    const document = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup('api', app, document);
     await app.listen(env.APP_PORT);
 }
 

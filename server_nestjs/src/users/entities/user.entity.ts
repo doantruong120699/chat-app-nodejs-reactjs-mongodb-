@@ -1,13 +1,12 @@
-import { Column, Entity, Index } from 'typeorm';
+import { Column, Entity, Index, JoinColumn, OneToOne } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { BaseEntity } from '~core/entities/base.entity';
-import { LowerTransformer } from '~core/transformers/lower.transformer';
-import { TimestampTransformer } from '~core/transformers/timestamp.transformer';
+import { ProfileEntity } from './profile.entity';
 
 @Entity('User')
 export class UserEntity extends BaseEntity {
     @Index()
-    @Column({ transformer: new LowerTransformer() })
+    @Column({})
     email: string;
 
     @Exclude()
@@ -20,8 +19,11 @@ export class UserEntity extends BaseEntity {
 
     @Column({
         type: 'timestamp',
-        nullable: true,
-        transformer: new TimestampTransformer()
+        nullable: true
     })
     lastLoginAt: Date;
+
+    @OneToOne(() => ProfileEntity, (profile) => profile.user) // specify inverse side as a second parameter
+    @JoinColumn()
+    profile: ProfileEntity;
 }

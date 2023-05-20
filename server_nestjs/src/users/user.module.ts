@@ -1,17 +1,15 @@
 import { Module } from '@nestjs/common';
 import { UserService } from './services/user.service';
-import { UserController } from './http/controllers/user.controller';
+import { UserController } from './controllers/user.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserRepository } from './repositories/user.repository';
-import { AuthController } from './http/controllers/auth.controller';
+import { AuthController } from './controllers/auth.controller';
 import { AuthService } from './services/auth.service';
 import { JwtModule } from '@nestjs/jwt';
 import { env } from '~config/env.config';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { UserEntity } from './entities/user.entity';
-import { OtpEntity } from './entities/otp.entity';
-import { OtpRepository } from './repositories/otp.repository';
-import { ResetPasswordController } from './http/controllers/reset-password.controller';
+import { ResetPasswordController } from './controllers/reset-password.controller';
 import { ResetPasswordService } from './services/reset-password.service';
 
 @Module({
@@ -19,7 +17,7 @@ import { ResetPasswordService } from './services/reset-password.service';
     controllers: [UserController, AuthController, ResetPasswordController],
     exports: [UserService],
     imports: [
-        TypeOrmModule.forFeature([UserRepository, UserEntity, OtpEntity, OtpRepository]),
+        TypeOrmModule.forFeature([UserRepository, UserEntity]),
         JwtModule.register({
             secret: env.JWT.SECRET,
             signOptions: {

@@ -4,9 +4,9 @@ import bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 // import { Cache } from 'cache-manager';
 import moment from 'moment';
-import { SignUpDto } from '~users/http/dto/sign-up.dto';
 import { env } from '~config/env.config';
 import { LoginResponse } from '~users/interfaces/login-response.interface';
+import { SignUpDto } from '~users/dto/sign-up.dto';
 
 @Injectable()
 export class AuthService {

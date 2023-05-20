@@ -3,7 +3,7 @@ import { Global, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository } from '../repositories/user.repository';
 import bcrypt from 'bcrypt';
-import { ValidateFieldException } from '~core/exceptions/validate-field.exception';
+// import { ValidateFieldException } from '~core/exceptions/validate-field.exception';
 import { env } from '~config/env.config';
 import { UserEntity } from '~users/entities/user.entity';
 import { FindManyOptions } from 'typeorm';
@@ -32,9 +32,9 @@ export class UserService {
     async changePassword(userId: string, newPassword: string, oldPassword: string): Promise<void> {
         const user = await this.userRepo.findOne({ id: userId }, { select: ['id', 'password'] });
 
-        if (!bcrypt.compareSync(oldPassword, user.password)) {
-            throw new ValidateFieldException('oldPassword', 'Your old password is incorrect.', 'wrongPass');
-        }
+        // if (!bcrypt.compareSync(oldPassword, user.password)) {
+        //     throw new ValidateFieldException('oldPassword', 'Your old password is incorrect.', 'wrongPass');
+        // }
 
         user.password = bcrypt.hashSync(newPassword, env.SALT_ROUND);
         await this.userRepo.update(user.id, user);
