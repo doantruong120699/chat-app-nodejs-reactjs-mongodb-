@@ -21,5 +21,9 @@ export const env = {
         PASSWORD: process.env.DATABASE_PASSWORD,
         NAME: process.env.DATABASE_NAME
     },
-    WHITELIST_DOMAINS: (process.env.WHITELIST_DOMAINS || 'localhost').split(',')
+    WHITELIST_DOMAINS: (process.env.WHITELIST_DOMAINS || 'localhost').split(','),
+    UPLOAD_LOCATION_BASE: process.env.UPLOAD_LOCATION_BASE,
+    MAX_FILE_SIZE: process.env.MAX_FILE_SIZE,
+    MAX_FILE_COUNTS: process.env.MAX_FILE_COUNTS,
+    BACKEND_URL: process.env.BACKEND_URL || '127.0.0.1:4000'
 };

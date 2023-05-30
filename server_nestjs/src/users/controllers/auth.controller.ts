@@ -9,7 +9,7 @@ import { SignUpDto } from '../dto/sign-up.dto';
 import { RefreshTokenAuthGuard } from '../guards/refresh-token-auth.guard';
 import { RefreshTokenDto } from '../dto/refresh-token.dto';
 
-@Controller('auth')
+@Controller('api/auth')
 @ApiTags('Authentication')
 export class AuthController extends BaseController {
     constructor(private authService: AuthService) {

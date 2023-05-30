@@ -11,7 +11,6 @@ import { defineLocale } from 'ngx-bootstrap/chronos';
 import { viLocale } from 'ngx-bootstrap/locale';
 defineLocale('vi', viLocale);
 
-
 @NgModule({
   declarations: [ProfileComponent],
   imports: [
@@ -23,8 +22,6 @@ defineLocale('vi', viLocale);
     BsDatepickerModule.forRoot(),
     ProfileRoutingModule,
   ],
-  providers: [
-    // AuthService
-  ]
+  providers: [AuthService],
 })
-export class ProfileModule { }
+export class ProfileModule {}

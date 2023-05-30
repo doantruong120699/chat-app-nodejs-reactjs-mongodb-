@@ -19,12 +19,8 @@ export class ResetPasswordService {
     }
 
     async createNewToken() {
-        // const token = makeAToken();
-        // const otp = this.otpRepo.findOneOrFail({ token });
-        // if (!otp) {
-        //     return await this.createNewToken();
-        // }
-        // return token;
+        const token = makeAToken();
+        return token;
     }
 
     async resetPassword(password: string, token: string) {

@@ -2,28 +2,32 @@ import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/
 import { UserRepository } from '../repositories/user.repository';
 import bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-// import { Cache } from 'cache-manager';
 import moment from 'moment';
 import { env } from '~config/env.config';
 import { LoginResponse } from '~users/interfaces/login-response.interface';
 import { SignUpDto } from '~users/dto/sign-up.dto';
+import { ProfileRepository } from '~users/repositories/profile.repository';
 
 @Injectable()
 export class AuthService {
-    public constructor(private userRepo: UserRepository, private jwtService: JwtService) {}
+    public constructor(
+        private userRepo: UserRepository,
+        private profileRepo: ProfileRepository,
+        private jwtService: JwtService
+    ) {}
 
     async login(email: string, password: string) {
         let user = await this.userRepo.findOne({ email }, { select: ['id', 'password'] });
         if (!user || !user.password || !bcrypt.compareSync(password, user.password)) {
-            throw new UnauthorizedException({ translate: 'error.email_or_password_wrong' });
+            throw new UnauthorizedException({ message: 'Invalid email or password' });
         }
         await this.updateLastLoginAt(user.id);
-        return await this.createLoginResult(user.id, email);
+        return await this.loginDataResponse(user.id, email);
     }
 
-    async createLoginResult(userId: string, email: string): Promise<LoginResponse> {
+    async loginDataResponse(userId: string, email: string): Promise<LoginResponse> {
         let token = await this.jwtService.signAsync({ id: userId, email: email });
-        let user = await this.userRepo.findById(userId);
+        let user = await this.userRepo.findById(userId, { relations: ['profile'] });
 
         const accessToken = this.jwtService.sign(
             { id: userId, email: email },
@@ -36,16 +40,15 @@ export class AuthService {
 
         return {
             user: user,
-            token: accessToken,
+            accessToken: accessToken,
             refreshToken: refreshToken,
             expireAt: ((await this.jwtService.decode(token)) as any).exp
         };
     }
 
     async logout(token: string) {
-        // const tokenExpireAt = ((await this.jwtService.decode(token)) as any).exp;
-        // const blacklistTtl = tokenExpireAt - moment().unix();
-        // this.cacheManager.set(token, 1, { ttl: blacklistTtl });
+        // Add refresh token to blacklist
+        return true;
     }
 
     private async verifyRefreshToken(refreshToken: string) {
@@ -55,27 +58,29 @@ export class AuthService {
             const blacklistTtl = payload.exp - moment().unix();
             return { payload, blacklistTtl };
         } catch (e) {
-            throw new BadRequestException({ translate: 'error.token_is_invalid_or_expired' });
+            throw new BadRequestException({ message: 'Token is invalid or expired' });
         }
     }
 
     async refreshToken(refreshToken: string) {
-        // const { payload, blacklistTtl } = await this.verifyRefreshToken(refreshToken);
-        // await this.cacheManager.set(refreshToken, 1, { ttl: blacklistTtl });
-        // return this.createLoginResult(payload.id, payload.email);
+        const { payload } = await this.verifyRefreshToken(refreshToken);
+        return this.loginDataResponse(payload.id, payload.email);
     }
 
     async updateLastLoginAt(id: string) {
-        await this.userRepo.update(id, { lastLoginAt: moment.utc() });
+        await this.userRepo.update(id, { lastLoginAt: moment.utc().format('YYYY-MM-DD HH:mm:ss') });
     }
 
     async signUp(signUpInfo: SignUpDto) {
         const hashedPassword = await bcrypt.hash(signUpInfo.password, env.SALT_ROUND);
+        const profile = await this.profileRepo.save(signUpInfo);
+
         const user = await this.userRepo.save({
             email: signUpInfo.email,
-            password: hashedPassword
+            password: hashedPassword,
+            profile: profile
         });
 
-        return this.createLoginResult(user.id, user.email);
+        return this.loginDataResponse(user.id, user.email);
     }
 }

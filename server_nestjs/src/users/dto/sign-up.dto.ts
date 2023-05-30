@@ -17,4 +17,32 @@ export class SignUpDto {
     @MaxLength(40)
     @Password()
     password: string;
+
+    @ApiProperty()
+    @IsNotEmpty()
+    @MaxLength(40)
+    firstName: string;
+
+    @ApiProperty()
+    @IsNotEmpty()
+    @MaxLength(40)
+    lastName: string;
+
+    @ApiProperty()
+    birthday: Date;
+
+    @ApiProperty()
+    @MinLength(8)
+    @MaxLength(12)
+    phoneNumber: string;
+
+    @ApiProperty()
+    @MaxLength(255)
+    address: string;
+
+    @ApiProperty()
+    gender: boolean;
+
+    @ApiProperty()
+    avatar: string;
 }

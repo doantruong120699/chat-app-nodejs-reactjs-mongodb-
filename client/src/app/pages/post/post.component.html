@@ -1,43 +1,159 @@
 <div class="row justify-content-center">
-  <div class="col-md-6 grid-margin stretch-card">
+  <div class="col-md-5 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
         <h4 class="card-title text-center">Create your post</h4>
-        <div class="d-flex user-info pb-4">
-          <div>
-            <img class="img-ls rounded-circle" src="assets/images/faces/face8.jpg" alt="Profile image">
-          </div>
-          <div>
-            <span class="fw-bold">{{user?.first_name}} {{user?.last_name}}</span>
-            <div class="dropdown privacy">
-              <button class="btn btn-secondary dropdown-toggle toggle-dark" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Public </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
-                <h6 class="dropdown-header">Public</h6>
-                <h6 class="dropdown-header">Only me</h6>
+        <form
+          [formGroup]="postForm"
+          (ngSubmit)="onSubmit(postForm)"
+          class="forms-sample"
+          novalidate
+        >
+          <div class="d-flex user-info pb-4">
+            <div>
+              <img
+                class="img-ls rounded-circle"
+                src="assets/images/faces/face8.jpg"
+                alt="Profile image"
+              />
+            </div>
+            <div>
+              <span class="fw-bold"
+                >{{ user?.profile?.firstName }}
+                {{ user?.profile?.lastName }}</span
+              >
+              <div class="dropdown privacy">
+                <button
+                  class="btn btn-secondary dropdown-toggle toggle-dark"
+                  type="button"
+                  id="dropdownMenuButton3"
+                  data-bs-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  Public
+                </button>
+                <div
+                  class="dropdown-menu"
+                  aria-labelledby="dropdownMenuButton3"
+                >
+                  <h6 class="dropdown-header">Public</h6>
+                  <h6 class="dropdown-header">Only me</h6>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <form class="forms-sample">
-          <div class="form-group caption">
-            <textarea rows="4" class="form-control" id="caption" placeholder="Hello!"></textarea>
+          <div class="form-group caption mb-1">
+            <textarea
+              (keyup)="autoGrowTextZone($event)"
+              formControlName="caption"
+              rows="4"
+              class="form-control"
+              name="caption"
+              id="caption"
+              placeholder="Hello!"
+            ></textarea>
           </div>
 
-          <img
-            *ngFor="let img of imageSrc"
-            [src]="img"
-            alt="Img" style="width:100%"
-          >
+          <div formArrayName="photos">
+            <input
+              class="d-none"
+              type="file"
+              accept="image/*"
+              #inputFile
+              (change)="onSelectPhoto($event)"
+            />
 
-          <input class="d-none" type="file" accept="image/*" #inputFile (change)="onSelectPhoto($event)">
-          <div *ngIf="imageSrc.length === 0" class="upload-photo" (click)="inputFile.click()">
-            <div class="text-center">
-              <i class="icon-upload icon-lg"></i>
-              <p>Upload your photo</p>
+            <div
+              *ngIf="imageSrc.length > 0"
+              [ngSwitch]="imageSrc.length"
+              class="imageSelected"
+            >
+              <div class="container">
+
+                <div *ngSwitchCase="1" class="">
+                  <img [src]="imageSrc[0]" alt="Img" style="width: 100%" />
+                </div>
+                <div *ngSwitchCase="2" class="d-flex" id="image_2">
+                  <div>
+                    <img [src]="imageSrc[0]" alt="Img" style="width: 100%" />
+                  </div>
+                  <div>
+                    <img [src]="imageSrc[1]" alt="Img" style="width: 100%" />
+                  </div>
+                </div>
+                <div *ngSwitchCase="3" class="" id="image_3">
+                  <div class="top-item">
+                    <img [src]="imageSrc[0]" alt="Img" style="width: 100%" />
+                  </div>
+                  <div class="bottom-item">
+                    <img [src]="imageSrc[1]" alt="Img" style="width: 50%" />
+                    <img [src]="imageSrc[2]" alt="Img" style="width: 50%" />
+                  </div>
+                </div>
+                <div *ngSwitchCase="4" class="" id="image_4">
+                  <div class="top-item">
+                    <img [src]="imageSrc[0]" alt="Img" style="width: 50%" />
+                    <img [src]="imageSrc[1]" alt="Img" style="width: 50%" />
+                  </div>
+
+                  <div class="bottom-item">
+                    <img [src]="imageSrc[2]" alt="Img" style="width: 50%" />
+                    <img [src]="imageSrc[3]" alt="Img" style="width: 50%" />
+                  </div>
+                </div>
+                <div *ngSwitchCase="5" class=""  id="image_5">
+                  <img [src]="imageSrc[0]" alt="Img" style="width: 50%" />
+                  <img [src]="imageSrc[1]" alt="Img" style="width: 50%" />
+                  <img [src]="imageSrc[2]" alt="Img" style="width: 33%" />
+                  <img [src]="imageSrc[3]" alt="Img" style="width: 33%" />
+                  <img [src]="imageSrc[4]" alt="Img" style="width: 33%" />
+                </div>
+              </div>
+
+              <div class="tools">
+                <div>
+                  <button
+                    class="btn btn-sm button-add-more"
+                    type="button"
+                    (click)="inputFile.click()"
+                  >
+                    <i
+                      data-visualcompletion="css-img"
+                      class="mr-1"
+                      style="
+                        background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yB/r/BquFxlUkDqZ.png');
+                        background-position: 0px -621px;
+                        background-size: auto;
+                        width: 16px;
+                        height: 16px;
+                        background-repeat: no-repeat;
+                        display: inline-block;
+                      "
+                    ></i>
+                    Add more
+                  </button>
+                </div>
+                <div class="remove-file" role="button" tabindex="0" (click)="removeFiles($event)">
+                  <i data-visualcompletion="css-img" class="x1b0d499 x1d69dk1" style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/yQ/r/fxdCboHHQwb.png&quot;); background-position: -126px -84px; background-size: auto; width: 20px; height: 20px; background-repeat: no-repeat; display: inline-block;"></i>
+                </div>
+              </div>
+            </div>
+
+            <div
+              *ngIf="imageSrc.length === 0"
+              class="upload-photo"
+              (click)="inputFile.click()"
+            >
+              <div class="text-center">
+                <i class="icon-upload icon-lg"></i>
+                <p>Upload your photo</p>
+              </div>
             </div>
           </div>
+
           <div class="form-group action mt-4">
-            <button type="button" class="btn btn-primary">Post now</button>
+            <button type="submit" class="btn btn-primary">Post now</button>
             <button type="button" class="btn btn-secondary">Save Draft</button>
           </div>
         </form>

@@ -1,5 +1,6 @@
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { UserEntity } from './user.entity';
+import { ImageTransformer } from '~core/transformers/images.transformer';
 
 @Entity('Profile')
 export class ProfileEntity {
@@ -24,7 +25,7 @@ export class ProfileEntity {
     @Column({ nullable: true })
     gender: boolean;
 
-    @Column({ nullable: true, length: 255 })
+    @Column({ nullable: true, length: 255, transformer: new ImageTransformer() })
     avatar: string;
 
     @OneToOne(() => UserEntity, (user) => user.profile) // specify inverse side as a second parameter

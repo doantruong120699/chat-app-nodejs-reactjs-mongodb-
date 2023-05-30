@@ -6,7 +6,6 @@ import { env } from '~config/env.config';
 export class RefreshTokenAuthGuard implements CanActivate {
     constructor(private jwtService: JwtService) {}
 
-    // async canActivate(context: ExecutionContext): Promise<boolean> {
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const { refreshToken } = context.switchToHttp().getRequest().body;
 

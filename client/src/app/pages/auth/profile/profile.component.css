@@ -2,3 +2,6 @@
   width: 230px;
   height: 230px;
 }
+.avatar{
+  cursor: pointer;
+}

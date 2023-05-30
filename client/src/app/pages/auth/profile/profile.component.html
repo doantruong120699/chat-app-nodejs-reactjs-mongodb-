@@ -19,18 +19,22 @@
                 <div class="col-12 grid-margin stretch-card">
                   <div class="card card-rounded">
                     <div class="card-body">
-                      <div class="row">
-                        <div class="col-lg-12">
-                          <div class="text-center mt-3">
-                            <img class="img-lg rounded-circle" src="assets/images/faces/face23.jpg" alt="Profile image">
-                          </div>
-                          <div class="btn-wrapper text-center mt-5">
-                            <a href="#" class="btn btn-primary text-white"><i class="icon-upload"></i> Upload</a>
-                            <a href="#" class="btn btn-otline-dark align-items-center"><i class="icon-share"></i> Share</a>
-                            <a href="#" class="btn btn-otline-dark me-0"><i class="icon-printer"></i> Print</a>
+                      <form [formGroup]="avatarForm" (ngSubmit)="onSubmitAvatar(avatarForm)" class="form" novalidate>
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <input class="d-none" id="avatar" type="file" accept="image/*" #inputFile (change)="onSelectPhoto($event)">
+                            <div class="text-center mt-3">
+                              <img *ngIf="imageSrc"  class="avatar img-lg rounded-circle" src="{{imageSrc}}" alt="Profile image" (click)="inputFile.click()">
+                              <img *ngIf="!imageSrc" class="avatar img-lg rounded-circle" src="{{user?.profile?.avatar}}" alt="Profile image" (click)="inputFile.click()">
+                            </div>
+                            <div class="btn-wrapper text-center mt-5">
+                              <button type="submit" class="btn btn-primary text-white"><i class="icon-upload"></i> Upload</button>
+                              <a href="#" class="btn btn-otline-dark align-items-center"><i class="icon-share"></i> Share</a>
+                              <a href="#" class="btn btn-otline-dark me-0"><i class="icon-printer"></i> Print</a>
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      </form>
                     </div>
                   </div>
                 </div>
@@ -45,35 +49,30 @@
                         <div *ngFor="let e of errors" class="alert alert-danger" role="alert">
                           {{ e }}
                         </div>
-                        <!-- <div class="form-group avatar">
-                          <input type="file" id="avatar" #inputFile accept="image/*" (change)="onFileSelect($event)">
-                          <label for="avatar">Ảnh đại diện</label>
-                          <img [src]="user?.profile?.avatar" [attr.alt]="user?.first_name + ' ' + user?.last_name" class="avarta-profile"/>
-                        </div> -->
                         <div class="row">
                           <div class="col-lg-6">
                             <div class="form-group">
-                              <label for="first_name">First name</label>
-                              <input type="text" id="first_name" formControlName="first_name" class="form-control"
-                                [ngClass]="{'is-invalid': profileForm.get('first_name')!.touched || profileForm.get('first_name')!.dirty}">
-                              <div class="invalid-feedback" *ngIf="profileForm.get('first_name')!.hasError('required')">
-                                Họ là bắt buộc
+                              <label for="firstName">First name</label>
+                              <input type="text" id="firstName" formControlName="firstName" class="form-control"
+                                [ngClass]="{'is-invalid': profileForm.get('firstName')?.errors}">
+                              <div class="invalid-feedback" *ngIf="profileForm.get('firstName')?.hasError('required')">
+                                First name is required
                               </div>
-                              <div class="invalid-feedback" *ngIf="profileForm.get('first_name')!.hasError('maxlength')">
-                                Tối đa {{ profileForm.get('first_name')!.errors!['maxlength'].requiredLength }} kí tự
+                              <div class="invalid-feedback" *ngIf="profileForm.get('firstName')?.hasError('maxlength')">
+                                Max {{ profileForm.get('firstName')?.errors!['maxlength'].requiredLength }} characters
                               </div>
                             </div>
                           </div>
                           <div class="col-lg-6">
                             <div class="form-group">
-                              <label for="last_name">Last name</label>
-                              <input type="text" id="last_name" formControlName="last_name" class="form-control"
-                                [ngClass]="{'is-invalid': profileForm.get('last_name')!.touched || profileForm.get('last_name')!.dirty}">
-                              <div class="invalid-feedback" *ngIf="profileForm.get('last_name')!.hasError('required')">
-                                Tên là bắt buộc
+                              <label for="lastName">Last name</label>
+                              <input type="text" id="lastName" formControlName="lastName" class="form-control"
+                                [ngClass]="{'is-invalid': profileForm.get('lastName')?.errors}">
+                              <div class="invalid-feedback" *ngIf="profileForm.get('lastName')?.hasError('required')">
+                                Last name is required
                               </div>
-                              <div class="invalid-feedback" *ngIf="profileForm.get('last_name')!.hasError('maxlength')">
-                                Tối đa {{ profileForm.get('last_name')!.errors!['maxlength'].requiredLength }} kí tự
+                              <div class="invalid-feedback" *ngIf="profileForm.get('lastName')?.hasError('maxlength')">
+                                Max {{ profileForm.get('lastName')?.errors!['maxlength'].requiredLength }} characters
                               </div>
                             </div>
                           </div>
@@ -90,17 +89,11 @@
                               <label for="birthday">Birthday</label>
                               <input type="text" id="birthday" formControlName="birthday" class="form-control date-picker-input"
                                 bsDatepicker
-                                [ngClass]="{'is-invalid': (profileForm.get('birthday')!.touched || profileForm.get('birthday')!.dirty) && profileForm.get('birthday')!.hasError('required')}"
+                                [ngClass]="{'is-invalid': (profileForm.get('birthday')?.errors) && profileForm.get('birthday')?.hasError('required')}"
                                 [maxDate]="maxDate"
                                 [bsConfig]="{ isAnimated: true, adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD'}"
                               >
-                              <!-- <div id="datepicker-popup" class="input-group date datepicker navbar-date-picker">
-                                <span class="input-group-addon input-group-prepend border-right">
-                                  <span class="icon-calendar input-group-text calendar-icon"></span>
-                                </span>
-                                <input type="text" class="form-control">
-                              </div> -->
-                              <div class="invalid-feedback" *ngIf="profileForm.get('birthday')!.hasError('required')">
+                              <div class="invalid-feedback" *ngIf="profileForm.get('birthday')?.hasError('required')">
                                 Birthday is required
                               </div>
                             </div>
@@ -118,8 +111,18 @@
                           </div>
                           <div class="col-lg-6">
                             <div class="form-group">
-                              <label for="phone">Phone number</label>
-                              <input type="text" id="phone" name="phoneNumber" formControlName="phone" class="form-control">
+                              <label for="phoneNumber">Phone number</label>
+                              <input type="text" id="phoneNumber" name="phoneNumber" formControlName="phoneNumber" class="form-control"
+                                      [ngClass]="{'is-invalid': profileForm.get('phoneNumber')?.errors}">
+                              <div class="invalid-feedback" *ngIf="profileForm.get('phoneNumber')?.hasError('required')">
+                                Phone number is required
+                              </div>
+                              <div class="invalid-feedback" *ngIf="profileForm.get('phoneNumber')?.hasError('maxlength')">
+                                Max {{ profileForm.get('phoneNumber')?.errors!['maxlength'].requiredLength }} characters
+                              </div>
+                              <div class="invalid-feedback" *ngIf="profileForm.get('phoneNumber')?.hasError('minlength')">
+                                Min {{ profileForm.get('phoneNumber')?.errors!['minlength'].requiredLength }} characters
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -127,7 +130,8 @@
                           <div class="col-lg-12">
                             <div class="form-group">
                               <label for="address">Address</label>
-                              <input type="text" name="address" id="address" formControlName="address" class="form-control">
+                              <input type="text" name="address" id="address" formControlName="address" class="form-control"
+                                    [ngClass]="{'is-invalid': profileForm.get('address')?.errors}">
                             </div>
                           </div>
                         </div>
@@ -158,7 +162,7 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Change your password</h4>
-                  <form class="forms-sample">
+                  <form class="forms-sample">`
                     <div class="form-group">
                       <label for="oldPassword">Old Password</label>
                       <input type="password" class="form-control" id="oldPassword" placeholder="Password">

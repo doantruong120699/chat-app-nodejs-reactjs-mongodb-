@@ -6,7 +6,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from '~app.module';
 import { BadRequestException } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import path from 'path';
+import { join } from 'path';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
@@ -25,11 +25,19 @@ async function bootstrap() {
             }
         }
     });
-    app.useStaticAssets(path.join(env.ROOT_PATH, 'static'));
 
-    const config = new DocumentBuilder().setTitle('API docs').setVersion('1.0').build();
+    app.useStaticAssets(join(__dirname, '..', 'media'), {
+        index: false,
+        prefix: '/media'
+    });
+
+    const config = new DocumentBuilder().setTitle('API docs').setVersion('1.0').addBearerAuth().build();
     const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('api', app, document);
+    SwaggerModule.setup('api', app, document, {
+        swaggerOptions: {
+            persistAuthorization: true
+        }
+    });
     await app.listen(env.APP_PORT);
 }
 

@@ -5,7 +5,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CheckResetTokenDto } from '../dto/check-reset-token.dto';
 import { ResetPasswordDto } from '../dto/reset-password.dto';
 
-@Controller('reset-password')
+@Controller('api/reset-password')
 @ApiTags('Reset password')
 export class ResetPasswordController extends BaseController {
     constructor(private resetPasswordService: ResetPasswordService) {

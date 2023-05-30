@@ -1,6 +1,5 @@
 import { Injectable, ExecutionContext } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ExtractJwt } from 'passport-jwt';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
@@ -12,9 +11,6 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
         if (!(await super.canActivate(context))) {
             return false;
         }
-        // const token = ExtractJwt.fromAuthHeaderAsBearerToken()(context.switchToHttp().getRequest());
-
         return true;
-        // return !(await this.cacheManager.get(token));
     }
 }

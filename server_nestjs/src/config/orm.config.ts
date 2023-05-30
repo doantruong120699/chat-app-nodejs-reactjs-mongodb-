@@ -23,7 +23,12 @@ const config: ConnectionOptions = {
     cli: {
         migrationsDir: [`${env.ROOT_PATH}/**/databases/migrations/*.${isTest ? 'ts' : 'js'}`]
     },
-    logging: false
+    logging: false,
+    charset: 'utf8mb4',
+    collation: 'utf8mb4_unicode_ci',
+    extra: {
+        charset: 'utf8mb4_unicode_ci'
+    }
 } as any;
 console.log(config);
 export = config;

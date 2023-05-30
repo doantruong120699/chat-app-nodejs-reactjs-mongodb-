@@ -13,27 +13,25 @@ import { ErrorInterceptor } from './_helper';
 import { reducers } from './store/reducers';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { AuthService } from './_services';
+import { AuthService, PostService } from './_services';
 import { UserEffect } from './store/effects';
 import { environment } from '../environments/environment.prod';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     LayoutModule,
+    ToastrModule.forRoot(),
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([
-      UserEffect
-    ]),
+    EffectsModule.forRoot([UserEffect]),
     AppRoutingModule,
     HttpClientModule,
     StoreDevtoolsModule.instrument({
       name: 'NgRx Demo App',
-      logOnly: environment.production
+      logOnly: environment.production,
     }),
   ],
   providers: [
@@ -41,8 +39,9 @@ import { environment } from '../environments/environment.prod';
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     JwtHelperService,
-    AuthService
+    AuthService,
+    PostService,
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

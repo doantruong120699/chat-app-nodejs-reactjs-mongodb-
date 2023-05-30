@@ -6,46 +6,48 @@ import { User } from '@app/_models';
 export interface State {
   loading: boolean;
   data: any;
-};
+}
 
 const initialState: State = {
-    loading: false,
-    data: {
-      user: {} as User
-    }
+  loading: false,
+  data: {
+    user: {} as User,
+  },
 };
 
 export interface ActionWithPayload<T> extends Action {
-    payload: T;
-};
+  payload: T;
+}
 
-export function UserReducer(state = initialState, action: ActionWithPayload<State>): State {
-    switch (action.type) {
-
-        case userAction.UserActionType.GET_USER_LOAD_SUCCESS: {
-            return _.assign({}, state, {
-                loading: false,
-                data: action.payload
-            });
-        }
-
-        case userAction.UserActionType.GET_USER_PROFILE_LOAD: {
-            return _.assign({}, state, {
-                loading: true
-            });
-        }
-
-        case userAction.UserActionType.GET_USER_PROFILE_LOAD_SUCCESS: {
-            return _.assign({}, state, {
-                loading: false,
-                data: _.assign({}, state.data, {
-                    user: action.payload
-                })
-            });
-        }
-
-        default: {
-            return state;
-        }
+export function UserReducer(
+  state = initialState,
+  action: ActionWithPayload<State>
+): State {
+  switch (action.type) {
+    case userAction.UserActionType.GET_USER_LOAD_SUCCESS: {
+      return _.assign({}, state, {
+        loading: false,
+        data: action.payload,
+      });
     }
+
+    case userAction.UserActionType.GET_USER_PROFILE_LOAD: {
+      return _.assign({}, state, {
+        loading: true,
+      });
+    }
+
+    case userAction.UserActionType.GET_USER_PROFILE_LOAD_SUCCESS: {
+      return _.assign({}, state, {
+        loading: false,
+        data: _.assign({}, state.data, {
+          user: action.payload,
+        }),
+      });
+    }
+
+    default: {
+      return state;
+    }
+  }
 }

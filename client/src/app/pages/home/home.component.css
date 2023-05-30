@@ -22,69 +22,8 @@
   border: 1px solid #dee2e6;
   border-radius: 10px;
 }
-.post .card-body{
-  padding: 0%;
-}
-.card-body .user-info{
-  gap: 10px;
-  padding-top: 12px;
-  margin-bottom: 12px;
-  padding-left: 16px;
-  padding-right: 16px;
-}
-.privacy{
-  margin-top: 5px;
+.time-line{
   display: flex;
-  gap: 5px;
-  place-items: center;
-  color: #65676b;
-}
-.content .caption{
-  padding: 4px 16px 16px 16px;
-}
-.post-info{
-  display: flex;
-  justify-content: space-between;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin-right: 16px;
-  margin-left: 16px;
-}
-
-.post-info .react{
-  gap: 10px;
-}
-
-.post-action {
-  display: flex;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  margin-right: 16px;
-  margin-left: 16px;
-  border-bottom: 1px solid #ced0d4;
-  border-top: 1px solid #ced0d4;
-}
-
-.post-action > div{
-  width: 100%;
-  padding: 10px;
-  cursor: pointer;
-  display: flex;
-  gap: 7px;
-  justify-content: center;
-  align-items: center;
-}
-.post-action > div:hover{
-  background-color: #dee2e6;
-  border-radius: 5px;
-}
-
-.user-comment-action{
-  margin-right: 16px;
-  margin-left: 16px;
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-  margin-bottom: 20px;
-  place-items: center;
+  flex-direction: column;
+  gap: 40px;
 }

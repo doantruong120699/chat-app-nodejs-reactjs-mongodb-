@@ -1,44 +1,143 @@
-.card-title{
+.card-title {
   border-bottom: 1px solid #dee2e6;
   padding-bottom: 25px;
 }
-.card-body .user-info{
+
+.card-body .user-info {
   gap: 10px;
 }
-.privacy{
+
+.privacy {
   margin-top: 5px;
 }
-.privacy button{
+
+.privacy button {
   padding: 0.5rem 1.5rem;
 }
-.user-info{
+
+.user-info {
   /* display: flex; */
   flex-flow: row;
   /* justify-content: center; */
 }
-.user-info img{
+
+.user-info img {
   width: 50px;
   height: 50px;
 }
-.form-group.caption textarea{
+
+.form-group.caption textarea {
   border: unset;
   padding: 0;
   color: #000;
 }
-.upload-photo:hover{
+
+.upload-photo:hover {
   background-color: #e5e8eb;
 }
-.upload-photo{
+
+.upload-photo {
   border: 1px solid #dee2e6;
   border-radius: 10px;
   height: 300px;
   padding: 10px;
   display: flex;
-  justify-content:center;
+  justify-content: center;
   align-items: center;
   cursor: pointer;
 }
-.action{
+
+.action {
   display: flex;
   gap: 10px;
+}
+
+textarea {
+  line-height: 1.3;
+}
+
+.imageSelected {
+  position: relative;
+}
+
+.imageSelected>.tools {
+  display: block;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  padding: 12px 12px 0px 12px;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.tools .remove-file{
+  background-color: #fff;
+  border-radius: 50%;
+  width: 34px;
+  text-align: center;
+  display: flex;
+  place-content: center;
+  flex-flow: wrap-reverse;
+}
+
+.button-add-more {
+  background-color: #fff;
+  color: #000;
+  border-radius: 6px;
+  display: flex;
+  place-items: center;
+}
+
+.button-add-more i {
+  margin-right: 5px;
+}
+.container{
+  border-radius: 8px;
+  border: 1px solid #ced0d4;
+  /* padding-left: 0%;
+  padding-right: 0%; */
+  padding: 5px;
+}
+.container img{
+  border-radius: 8px;
+  object-fit: cover;
+  height: inherit;
+}
+.container img:hover{
+  background-color: #e5e8eb;
+  opacity: 80%;
+}
+
+#image_2{
+  gap: 5px;
+}
+#image_2 div{
+  width: 50%;
+  height: 400px;
+  overflow: hidden;
+}
+
+#image_3 .top-item{
+  height: 200px;
+  margin-bottom: 5px;
+}
+
+#image_3 .bottom-item{
+  height: 300px;
+  display: flex;
+  gap: 5px;
+}
+
+#image_4{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+#image_4 .top-item, #image_4 .bottom-item{
+  height: 250px;
+  display: flex;
+  gap: 5px;
 }

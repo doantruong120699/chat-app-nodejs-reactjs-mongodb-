@@ -7,19 +7,14 @@ import { LoginRoutingModule } from './login-routing.module';
 import { AuthEffect } from '@app/store/effects';
 import { AuthService } from '@app/_services';
 
-
 @NgModule({
   declarations: [LoginComponent],
   imports: [
     CommonModule,
     LoginRoutingModule,
     ReactiveFormsModule,
-    EffectsModule.forFeature([
-      AuthEffect
-    ])
+    EffectsModule.forFeature([AuthEffect]),
   ],
-  providers: [
-    AuthService
-  ]
+  providers: [AuthService],
 })
-export class LoginModule { }
+export class LoginModule {}

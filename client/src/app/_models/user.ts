@@ -3,21 +3,20 @@ class BaseModel {
   updatedAt?: Date;
 }
 
-export interface User extends BaseModel{
+export interface User extends BaseModel {
   id?: string;
   username?: string;
   email?: string;
-  first_name?: string;
-  last_name?: string;
-  is_active?: boolean;
   profile?: Profile;
 }
 
 export interface Profile extends BaseModel {
   id?: string;
+  firstName?: string;
+  lastName?: string;
   address?: string;
   birthday?: Date;
   gender?: boolean;
-  phonenumber?: string;
+  phoneNumber?: string;
   avatar?: string;
 }

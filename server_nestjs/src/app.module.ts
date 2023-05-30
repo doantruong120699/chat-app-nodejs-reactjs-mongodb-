@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AppController } from '~app.controller';
 import { UserModule } from '~users/user.module';
 import { databaseConfig } from '~config/database.config';
 import { CommandModule } from 'nestjs-command';
 import { ConfigModule } from '@nestjs/config';
+import { PostsModule } from './posts/posts.module';
+import { JwtStrategy } from '~users/strategies/jwt.strategy';
 
 const environment = process.env.NODE_ENV || 'development';
 @Module({
@@ -14,10 +15,11 @@ const environment = process.env.NODE_ENV || 'development';
         }),
         databaseConfig,
         CommandModule,
-        UserModule
+        UserModule,
+        PostsModule
     ],
-    controllers: [AppController]
+    controllers: [],
 
-    // providers: []
+    providers: [JwtStrategy]
 })
 export class AppModule {}

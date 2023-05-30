@@ -14,7 +14,7 @@ const userService = {
                     UserFields.ID,
                     UserFields.USERNAME,
                     UserFields.EMAIL,
-                    UserFields.FIRST_NAME,
+                    UserFields.firstName,
                     UserFields.LAST_NAME,
                     UserFields.IS_ACTIVE,
                     UserFields.CREATED_AT,
