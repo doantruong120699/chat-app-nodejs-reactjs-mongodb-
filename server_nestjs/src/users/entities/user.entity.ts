@@ -5,6 +5,8 @@ import { ProfileEntity } from './profile.entity';
 import { PostEntity } from '~posts/entities/post.entity';
 import { AlbumEntity } from '~posts/entities/album.entity';
 import { PhotoEntity } from '~posts/entities/photo.entity';
+import { ReactionEntity } from '~posts/entities/reaction.entity';
+import { CommentEntity } from '~posts/entities/comment.entity';
 
 @Entity('User')
 export class UserEntity extends BaseEntity {
@@ -26,7 +28,7 @@ export class UserEntity extends BaseEntity {
     })
     lastLoginAt: Date;
 
-    @OneToOne(() => ProfileEntity, (profile) => profile.user) // specify inverse side as a second parameter
+    @OneToOne((type) => ProfileEntity, (profile) => profile.user)
     @JoinColumn()
     profile: ProfileEntity;
 
@@ -38,4 +40,10 @@ export class UserEntity extends BaseEntity {
 
     @OneToMany((type) => PhotoEntity, (photo) => photo.owner)
     photos: PhotoEntity[];
+
+    @OneToMany(() => ReactionEntity, (reaction) => reaction.user)
+    reactions: ReactionEntity[];
+
+    @OneToMany(() => CommentEntity, (comment) => comment.user)
+    comments: CommentEntity[];
 }

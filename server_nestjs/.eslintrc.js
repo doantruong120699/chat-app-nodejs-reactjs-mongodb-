@@ -30,7 +30,7 @@ module.exports = {
             skipComments: true
         }],
         'max-lines-per-function': ['error', {
-            max: 50,
+            max: 100,
             skipComments: true
         }],
         '@typescript-eslint/naming-convention': [

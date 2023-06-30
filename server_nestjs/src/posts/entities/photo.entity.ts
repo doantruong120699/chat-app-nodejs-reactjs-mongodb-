@@ -24,7 +24,7 @@ export class PhotoEntity extends BaseEntity {
     url: string;
 
     @Column({ default: 0 })
-    likes: number;
+    likeCounter: number;
 
     @Column({ default: 0 })
     height: number;
@@ -33,10 +33,10 @@ export class PhotoEntity extends BaseEntity {
     width: number;
 
     @Column({ default: 0 })
-    comments: number;
+    commentCounter: number;
 
     @Column({ default: 0 })
-    share: number;
+    shareCounter: number;
 
     @Column({ default: PostStatus.DRAFT, nullable: false })
     status: number;

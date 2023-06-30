@@ -44,12 +44,12 @@ export class PostsController {
 
     @Get()
     async findAll(@CurrentUser() user: UserEntity) {
-        return this.postsService.findAll();
+        return this.postsService.findAll(user);
     }
 
     @Get(':id')
     findOne(@Param('id') id: string) {
-        return this.postsService.findOne(+id);
+        // return this.postsService.findOne(+id);
     }
 
     @Patch(':id')

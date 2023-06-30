@@ -1,8 +1,8 @@
 import { EntityRepository, Repository } from 'typeorm';
-import { PostEntity } from '~posts/entities/post.entity';
+import { CommentEntity } from '~posts/entities/comment.entity';
 
-@EntityRepository(PostEntity)
-export class PostRepository extends Repository<PostEntity> {
+@EntityRepository(CommentEntity)
+export class CommentRepository extends Repository<CommentEntity> {
     async executeRawQuery(sqlQuery: string, parameters?: any[]): Promise<any> {
         return this.query(sqlQuery, parameters);
     }

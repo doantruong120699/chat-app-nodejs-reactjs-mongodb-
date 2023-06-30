@@ -25,10 +25,7 @@ const config: ConnectionOptions = {
     },
     logging: false,
     charset: 'utf8mb4',
-    collation: 'utf8mb4_unicode_ci',
-    extra: {
-        charset: 'utf8mb4_unicode_ci'
-    }
+    collation: 'utf8mb4_unicode_ci'
 } as any;
 console.log(config);
 export = config;

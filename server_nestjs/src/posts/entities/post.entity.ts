@@ -3,6 +3,8 @@ import { PostPrivacy, PostStatus } from '../constants/post.status';
 import { UserEntity } from '~users/entities/user.entity';
 import { BaseEntity } from '~core/entities/base.entity';
 import { PhotoEntity } from './photo.entity';
+import { ReactionEntity } from './reaction.entity';
+import { CommentEntity } from './comment.entity';
 
 @Entity('Post')
 export class PostEntity extends BaseEntity {
@@ -11,19 +13,19 @@ export class PostEntity extends BaseEntity {
 
     @Column({
         type: 'text',
-        nullable: true,
-        collation: 'utf8'
+        nullable: true
+        // collation: 'utf8mb4'
     })
     caption: string;
 
     @Column({ default: 0 })
-    likes: number;
+    likeCounter: number;
 
     @Column({ default: 0 })
-    comments: number;
+    commentCounter: number;
 
     @Column({ default: 0 })
-    share: number;
+    shareCounter: number;
 
     @Column({ default: PostStatus.DRAFT, nullable: false })
     status: number;
@@ -33,4 +35,10 @@ export class PostEntity extends BaseEntity {
 
     @OneToMany((type) => PhotoEntity, (photo) => photo.post)
     photos: PhotoEntity[];
+
+    @OneToMany((type) => ReactionEntity, (reaction) => reaction.post)
+    reactions: ReactionEntity[];
+
+    @OneToMany((type) => CommentEntity, (comment) => comment.post)
+    comments: CommentEntity[];
 }
